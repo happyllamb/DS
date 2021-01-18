@@ -59,6 +59,35 @@ void popBack(seqList* sl)
 		sl->_size--;
 }
 
+//头插一个数据
+void pushFront(seqList* sl,SLDaTatype val)
+{
+	if (sl == 0)
+		return;
+	int end = sl->_size;
+	while (end > 0)
+	{
+		sl->_data[end] = sl->_data[end - 1];
+		end--;
+	}
+	sl->_data[0] = val;
+	sl->_size++;
+}
+
+//头删一个数据
+void popFront(seqList* sl)
+{
+	if (sl == 0)
+		return;
+	int start = 1;
+	while (start < sl->_size)
+	{
+		sl->_data[start - 1] = sl->_data[start];
+		start++;
+	}
+	sl->_size--;
+}
+
 //打印顺序表
 void printseqList(seqList* sl)
 {
@@ -83,7 +112,9 @@ void test()
 	printseqList(&sl);
 	pushBack(&sl, 5);
 	printseqList(&sl);
-	popBack(&sl);
+	pushFront(&sl, -1);
+	printseqList(&sl);
+	popFront(&sl);
 	printseqList(&sl);
 }
 int main()

@@ -88,6 +88,38 @@ void popFront(seqList* sl)
 	sl->_size--;
 }
 
+//在任意位置插入一个数据
+void insert(seqList* sl, int pos, SLDaTatype val)
+{
+	if (sl == 0)
+		return;
+	if (pos >= 0 && pos <= sl->_size) {
+		checkCapacity(sl);
+		int end = sl->_size;
+		while (end > pos) {
+			sl->_data[end ] = sl->_data[end-1];
+			end--;
+		}
+		sl->_data[pos] = val;
+		sl->_size++;
+	}
+}
+
+//在任意位置删除一个数据
+void erase(seqList* sl, int pos)
+{
+	if (sl == 0)
+		return;
+	if (pos >= 0 && pos <= sl->_size) {
+		int start = pos;
+		while (start < sl->_size) {
+			sl->_data[start] = sl->_data[start + 1];
+			start++;
+		}
+		sl->_size--;
+	}
+}
+
 //打印顺序表
 void printseqList(seqList* sl)
 {
@@ -112,9 +144,9 @@ void test()
 	printseqList(&sl);
 	pushBack(&sl, 5);
 	printseqList(&sl);
-	pushFront(&sl, -1);
+	insert(&sl, 2, 5);
 	printseqList(&sl);
-	popFront(&sl);
+	erase(&sl, 3);
 	printseqList(&sl);
 }
 int main()

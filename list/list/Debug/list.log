@@ -1,0 +1,14 @@
+﻿  list.c
+C:\Users\Administrator\Desktop\DS\list\list\list.c(53,15): warning C4047: “函数”:“list *”与“list **”的间接级别不同
+C:\Users\Administrator\Desktop\DS\list\list\list.c(53,11): warning C4024: “listInit”: 形参和实参 1 的类型不同
+C:\Users\Administrator\Desktop\DS\list\list\list.c(54,19): warning C4047: “函数”:“list *”与“list **”的间接级别不同
+C:\Users\Administrator\Desktop\DS\list\list\list.c(54,15): warning C4024: “listPushBack”: 形参和实参 1 的类型不同
+C:\Users\Administrator\Desktop\DS\list\list\list.c(55,19): warning C4047: “函数”:“list *”与“list **”的间接级别不同
+C:\Users\Administrator\Desktop\DS\list\list\list.c(55,15): warning C4024: “listPushBack”: 形参和实参 1 的类型不同
+C:\Users\Administrator\Desktop\DS\list\list\list.c(56,19): warning C4047: “函数”:“list *”与“list **”的间接级别不同
+C:\Users\Administrator\Desktop\DS\list\list\list.c(56,15): warning C4024: “listPushBack”: 形参和实参 1 的类型不同
+C:\Users\Administrator\Desktop\DS\list\list\list.c(57,19): warning C4047: “函数”:“list *”与“list **”的间接级别不同
+C:\Users\Administrator\Desktop\DS\list\list\list.c(57,15): warning C4024: “listPushBack”: 形参和实参 1 的类型不同
+C:\Users\Administrator\Desktop\DS\list\list\list.c(58,19): warning C4047: “函数”:“list *”与“list **”的间接级别不同
+C:\Users\Administrator\Desktop\DS\list\list\list.c(58,15): warning C4024: “listPushBack”: 形参和实参 1 的类型不同
+  list.vcxproj -> C:\Users\Administrator\Desktop\DS\list\Debug\list.exe

@@ -47,15 +47,131 @@ void listPushBack(list* lst, LDatatype val)
 		tail->_next = creatNode(val);
 	}
 }
+
+//尾删一个数据
+void listPopBack(list* lst)
+{
+	if (lst == NULL || lst->_head == NULL)
+		return;
+	listNode* tail = lst->_head;
+	listNode* prev = NULL;
+	while (tail->_next != NULL) {
+		prev = tail;
+		tail = tail->_next;
+	}
+	//删除节点
+	free(tail);
+	//修改指向
+	if (prev == NULL)//删除的是第一个节点
+		lst->_head = NULL;
+	else
+		prev->_next = NULL;
+}
+
+//头插一个数据
+void listPushFront(list* lst, LDatatype val)
+{
+	if (lst == NULL)
+		return;
+	if (lst->_head == NULL)
+		lst->_head = creatNode(val);
+	else {
+		listNode* node = creatNode(val);
+		listNode* next = lst->_head;
+		lst->_head = node;
+		node->_next = next;
+	}
+}
+
+//头删一个数据
+void listPopFront(list* lst)
+{
+	if (lst == NULL||lst->_head == NULL)
+		return;
+	listNode* node = lst->_head->_next;
+	//释放头结点
+	free(lst->_head);
+	lst->_head = node;
+}
+
+//查找数据
+listNode* listFind(list* lst, LDatatype val)
+{
+	if (lst == NULL || lst->_head == NULL)
+		return;
+	//从第一个节点开始遍历
+	listNode* cur = lst->_head;
+	while (cur) {
+		if (cur->_data == val) {
+			return cur;
+		}
+		cur = cur->_next;
+	}
+	return NULL;
+}
+
+//在cur节点后面插入一个数据
+void listInsertAfter(listNode* cur, LDatatype val)
+{
+	listNode* node = creatNode(val);
+	listNode* next = cur->_next;
+	cur->_next = node;
+	node->_next = next;
+}
+
+//删除cur节点后面的一个数据
+void listEraseAfter(listNode* cur)
+{
+	listNode* next = cur->_next;
+	if (next == NULL)
+		return;
+	listNode* nextnext = next->_next;
+	free(next);
+	cur->_next = nextnext;
+}
+
+//销毁链表
+void listDestry(list* lst)
+{
+	if (lst == NULL || lst->_head == NULL)
+		return;
+	//从第一个节点开始遍历
+	listNode* cur = lst->_head;
+	while (cur) {
+		listNode* next = cur->_next;
+		free(cur);
+		cur = next;
+	}
+	lst->_head = NULL;
+}
+
+//打印链表
+void listPrint(list* lst)
+{
+	listNode* cur = lst->_head;
+	while (cur) {
+		printf("%d ", cur->_data);
+		cur = cur->_next;
+	}
+	printf("\n");
+}
+
 void test()
 {
 	list* lst;
 	listInit(&lst);
 	listPushBack(&lst, 1);
+	listPrint(&lst);
 	listPushBack(&lst, 2);
+	listPrint(&lst);
 	listPushBack(&lst, 3);
+	listPrint(&lst);
 	listPushBack(&lst, 4);
+	listPrint(&lst);
 	listPushBack(&lst, 5);
+	listPrint(&lst);
+	listPopBack(&lst);
+	listPrint(&lst);
 }
 int main()
 {

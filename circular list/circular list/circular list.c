@@ -94,6 +94,33 @@ void listPopFront(list* lst)
 	nextnext->_prev = lst->_head;
 }
 
+//在任意节点前面加入
+void listInsert(list* lst ,listNode* node ,LDataType val)
+{
+	if (lst == NULL)
+		return;
+	listNode* prev = node->_prev;
+	listNode* newNode = creatNode(val);
+
+	prev->_next = newNode;
+	newNode->_prev = prev;
+	newNode->_next = node;
+	node->_prev = newNode;
+}
+
+//删除任意节点
+void listErase(list* lst, listNode* node)
+{
+	if (lst == NULL || lst->_head == node)
+		return;
+	listNode* prev = node->_prev;
+	listNode* next = node->_next;
+	prev->_next = next;
+	next->_prev = prev;
+
+	free(node);
+}
+
 
 //打印链表
 void listPrint(list* lst)

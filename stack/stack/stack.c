@@ -49,6 +49,37 @@ SLDatatype stackTop(stack* st)
 {
 	return st->_data[st->_size - 1];
 }
+
+
+//获取栈有效元素的个数
+int stackSize(stack* st)
+{
+	return st->_size;
+}
+
+//检查栈是否为空
+void stackEmpty(stack* st)
+{
+	if (st == NULL || st->_size == 0)
+		return 1;
+	return 0;
+
+}
+
+//销毁栈
+void stackDestry(stack* st)
+{
+	if (st)
+	{
+		if (st->_data)
+		{
+			free(st->_data);
+			st->_data = NULL;
+		}
+	}
+}
+
+
 void test()
 {
 	stack st;

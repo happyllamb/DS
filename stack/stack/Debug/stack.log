@@ -1,2 +1,4 @@
 ﻿  stack.c
+C:\Users\Administrator\Desktop\DS\stack\stack\stack.c(64,11): warning C4098: “stackEmpty”:“void”函数返回值
+C:\Users\Administrator\Desktop\DS\stack\stack\stack.c(65,10): warning C4098: “stackEmpty”:“void”函数返回值
   stack.vcxproj -> C:\Users\Administrator\Desktop\DS\stack\Debug\stack.exe

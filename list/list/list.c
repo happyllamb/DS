@@ -98,7 +98,7 @@ void listPopFront(list* lst)
 listNode* listFind(list* lst, LDatatype val)
 {
 	if (lst == NULL || lst->_head == NULL)
-		return;
+		return NULL;
 	//从第一个节点开始遍历
 	listNode* cur = lst->_head;
 	while (cur) {

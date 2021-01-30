@@ -1,5 +1,4 @@
 ﻿  list.c
-C:\Users\Administrator\Desktop\DS\list\list\list.c(101,3): warning C4033: “listFind”必须返回值
 C:\Users\Administrator\Desktop\DS\list\list\list.c(162,15): warning C4047: “函数”:“list *”与“list **”的间接级别不同
 C:\Users\Administrator\Desktop\DS\list\list\list.c(162,11): warning C4024: “listInit”: 形参和实参 1 的类型不同
 C:\Users\Administrator\Desktop\DS\list\list\list.c(163,19): warning C4047: “函数”:“list *”与“list **”的间接级别不同
@@ -26,5 +25,4 @@ C:\Users\Administrator\Desktop\DS\list\list\list.c(173,18): warning C4047: “�
 C:\Users\Administrator\Desktop\DS\list\list\list.c(173,14): warning C4024: “listPopBack”: 形参和实参 1 的类型不同
 C:\Users\Administrator\Desktop\DS\list\list\list.c(174,16): warning C4047: “函数”:“list *”与“list **”的间接级别不同
 C:\Users\Administrator\Desktop\DS\list\list\list.c(174,12): warning C4024: “listPrint”: 形参和实参 1 的类型不同
-C:\Users\Administrator\Desktop\DS\list\list\list.c(111): warning C4715: “listFind”: 不是所有的控件路径都返回值
   list.vcxproj -> C:\Users\Administrator\Desktop\DS\list\Debug\list.exe

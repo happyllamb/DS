@@ -60,6 +60,52 @@ void queuePop(Queue* q)
 		q->_rear = NULL;//如果不将rear指向NULL，rear还会指向已经free的内存，形成野指针
 }
 
+//获取队头元素
+QDataType queueFront(Queue* q)
+{
+	return q->_front->_data;
+}
+
+//获取队尾元素
+QDataType queueBack(Queue* q)
+{
+	return q->_rear->_data;
+}
+
+//获取队列有效元素的个数
+int queueSize(Queue* q)
+{
+	int num = 0;
+	QNode* cur = q->_front;
+	while (cur)
+	{
+		num++;
+		cur = cur->_next;
+	}
+	return num;
+}
+
+//判断队列是否为空队列，如果为空返回非零，如果不为空返回零
+int queueEmpty(Queue* q)
+{
+	if (q->_front == NULL)
+		return 1;
+	return 0;
+}
+
+//销毁队列
+void queueDestry(Queue* q)
+{
+	QNode* cur = q->_front;
+	while (cur)
+	{
+		QNode* next = cur->_next;
+		free(cur);
+		cur = next;
+	}
+	q->_front = q->_rear = NULL;
+}
+
 
 void test()
 {

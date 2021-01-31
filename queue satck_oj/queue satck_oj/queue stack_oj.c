@@ -329,3 +329,162 @@ void myStackFree(MyStack* obj) {
 
 }
 
+
+
+
+
+
+//请你仅使用两个栈实现先入先出队列。队列应当支持一般队列的支持的所有操作（push、pop、peek、empty）
+
+typedef int SLDatatype;
+typedef struct stack
+{
+    SLDatatype* _data;
+    int _size;
+    int _capacity;
+}stack;
+
+//栈初始化
+void stackInit(stack* st)
+{
+    if (st == NULL)
+        return;
+    st->_data = NULL;
+    st->_capacity = st->_size = 0;
+}
+
+//栈的增容
+void checkCapacity(stack* st)
+{
+    if (st->_capacity == st->_size) {
+        int newCapacity = st->_capacity == 0 ? 1 : 2 * st->_capacity;
+        st->_data = (int*)realloc(st->_data, sizeof(int) * newCapacity);
+        st->_capacity = newCapacity;
+    }
+}
+
+//入栈：尾插
+void stackPush(stack* st, SLDatatype val)
+{
+    if (st == NULL)
+        return;
+    checkCapacity(st);
+    st->_data[st->_size++] = val;
+}
+
+//出栈：尾删
+void stackPop(stack* st)
+{
+    if (st == NULL)
+        return;
+    if (st->_size > 0)
+        st->_size--;
+}
+
+//显示栈顶的数据
+SLDatatype stackTop(stack* st)
+{
+    if (st->_data == NULL)
+        return;
+    return st->_data[st->_size - 1];
+}
+
+
+//获取栈有效元素的个数
+int stackSize(stack* st)
+{
+    return st->_size;
+}
+
+//检查栈是否为空
+int  stackEmpty(stack* st)
+{
+    if (st == NULL || st->_size == 0)
+        return 1;
+    else
+        return 0;
+
+}
+
+//销毁栈
+void stackDestry(stack* st)
+{
+    if (st)
+    {
+        if (st->_data)
+        {
+            free(st->_data);
+            st->_data = NULL;
+        }
+    }
+}
+
+
+
+typedef struct {
+    stack pushST;
+    stack popST;
+
+} MyQueue;
+
+/** Initialize your data structure here. */
+
+MyQueue* myQueueCreate() {
+    MyQueue* mq = (MyQueue*)malloc(sizeof(MyQueue));
+    stackInit(&mq->pushST);
+    stackInit(&mq->popST);
+    return mq;
+}
+
+/** Push element x to the back of queue. */
+void myQueuePush(MyQueue* obj, int x) {
+    return stackPush(&obj->pushST, x);
+
+}
+
+/** Removes the element from in front of queue and returns that element. */
+int myQueuePop(MyQueue* obj) {
+    int ret;
+    if (stackEmpty(&obj->popST))
+    {
+        while (stackEmpty(&obj->pushST) != 1)
+        {
+            int top = stackTop(&obj->pushST);
+            stackPop(&obj->pushST);
+            stackPush(&obj->popST, top);
+        }
+    }
+    ret = stackTop(&obj->popST);
+    stackPop(&obj->popST);
+    return ret;
+
+}
+
+/** Get the front element. */
+int myQueuePeek(MyQueue* obj) {
+
+    if (stackEmpty(&obj->popST))
+    {
+        while (stackEmpty(&obj->pushST) != 1)
+        {
+            int top = stackTop(&obj->pushST);
+            stackPop(&obj->pushST);
+            stackPush(&obj->popST, top);
+        }
+    }
+    return stackTop(&obj->popST);
+
+}
+
+/** Returns whether the queue is empty. */
+bool myQueueEmpty(MyQueue* obj) {
+    return stackEmpty(&obj->pushST) && stackEmpty(&obj->popST);
+
+}
+
+void myQueueFree(MyQueue* obj) {
+    stackDestry(&obj->pushST);
+    stackDestry(&obj->popST);
+    free(obj);
+
+}

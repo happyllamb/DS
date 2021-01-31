@@ -151,3 +151,181 @@ bool isValid(char* s) {
     return false;
 }
 
+
+//使用队列实现栈的下列操作：
+
+//push(x) --元素 x 入栈
+//pop() --移除栈顶元素
+//top() --获取栈顶元素
+//empty() --返回栈是否为空
+//注意 :
+
+//你只能使用队列的基本操作-- 也就是 push to back, peek / pop from front, size, 和 is empty 这些操作是合法的。
+//你所使用的语言也许不支持队列。 你可以使用 list 或者 deque（双端队列）来模拟一个队列 , 只要是标准的队列操作即可。
+//你可以假设所有操作都是有效的（例如, 对一个空的栈不会调用 pop 或者 top 操作）。
+
+
+
+
+typedef int QDataType;
+
+//定义节点
+typedef struct QNode
+{
+    struct QNode* _next;
+    QDataType _data;
+}QNode;
+
+//定义队列
+typedef struct Queue
+{
+    QNode* _front;
+    QNode* _rear;
+}Queue;
+
+
+//初始化队列
+void queueInit(Queue* q)
+{
+    //创建空队列
+    q->_front = NULL;
+    q->_rear = NULL;
+}
+
+//创建节点
+QNode* creatNode(QDataType val)
+{
+    QNode* node = (QNode*)malloc(sizeof(QNode));
+    node->_data = val;
+    node->_next = NULL;
+    return node;
+}
+
+//入队列：尾插
+void queuePush(Queue* q, QDataType val)
+{
+    QNode* node = creatNode(val);
+    if (q->_front == NULL)
+        q->_front = q->_rear = node;
+    else {
+        q->_rear->_next = node;
+        q->_rear = node;
+    }
+}
+
+//出队列：头删
+void queuePop(Queue* q)
+{
+    if (q->_front == NULL)
+        return;
+    QNode* next = q->_front->_next;
+    free(q->_front);
+    q->_front = next;
+    //检查删除后是否为空队列
+    if (q->_front == NULL)
+        q->_rear = NULL;//如果不将rear指向NULL，rear还会指向已经free的内存，形成野指针
+}
+
+//获取队头元素
+int  queueFront(Queue* q)
+{
+    return q->_front->_data;
+}
+
+//获取队尾元素
+int  queueBack(Queue* q)
+{
+    return q->_rear->_data;
+}
+
+//获取队列有效元素的个数
+int queueSize(Queue* q)
+{
+    int num = 0;
+    QNode* cur = q->_front;
+    while (cur)
+    {
+        num++;
+        cur = cur->_next;
+    }
+    return num;
+}
+
+//判断队列是否为空队列，如果为空返回非零，如果不为空返回零
+int queueEmpty(Queue* q)
+{
+    if (q->_front == NULL)
+        return 1;
+    return 0;
+}
+
+//销毁队列
+void queueDestry(Queue* q)
+{
+    QNode* cur = q->_front;
+    while (cur)
+    {
+        QNode* next = cur->_next;
+        free(cur);
+        cur = next;
+    }
+    q->_front = NULL;
+    q->_rear = NULL;
+}
+
+typedef struct {
+    Queue q;
+
+} MyStack;
+
+/** Initialize your data structure here. */
+
+MyStack* myStackCreate() {
+    MyStack* ms = (MyStack*)malloc(sizeof(MyStack));
+    queueInit(&ms->q);
+    return ms;
+
+}
+
+/** Push element x onto stack. */
+void myStackPush(MyStack* obj, int x) {
+    queuePush(&obj->q, x);
+
+}
+
+/** Removes the element on top of the stack and returns that element. */
+int myStackPop(MyStack* obj) {
+    int ret;
+    int size = queueSize(&obj->q);
+    while (size > 1)
+    {
+        int front = queueFront(&obj->q);
+        queuePop(&obj->q);
+        queuePush(&obj->q, front);
+        size--;
+
+    }
+    ret = queueFront(&obj->q);
+    queuePop(&obj->q);
+    return ret;
+
+}
+
+/** Get the top element. */
+int myStackTop(MyStack* obj) {
+    return queueBack(&obj->q);
+
+}
+
+/** Returns whether the stack is empty. */
+bool myStackEmpty(MyStack* obj) {
+    return queueEmpty(&obj->q);
+
+}
+
+void myStackFree(MyStack* obj) {
+    queueDestry(&obj->q);
+    free(obj);
+
+}
+

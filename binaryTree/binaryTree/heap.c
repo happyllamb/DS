@@ -31,3 +31,25 @@ void shiftDown(int* arr, int n, int cur)
 			break;
 	}
 }
+
+//向上调整算法
+void shiftUp(int* arr, int n, int cur)
+{
+	//找到父节点的位置
+	int parent = (cur - 1) / 2;
+	while (cur > 0)   //只要不是根节点，继续与父节点进行比较，向上调整
+	{
+		if (arr[cur] < arr[parent])
+		{
+			int tem = arr[parent];
+			arr[parent] = arr[cur];
+			arr[cur] = tem;
+
+			//更新位置
+			cur = parent;
+			parent = (cur - 1) / 2;
+		}
+		else
+			break;
+	}
+}

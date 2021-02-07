@@ -1,3 +1,89 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+
+typedef int HDataType;
+
+typedef struct heap
+{
+	HDataType* _data;
+	int _size;
+	int _capacity;
+}heap;
+
+void shiftDown(int* arr, int n, int cur);
+void shiftUp(int* arr, int n, int cur);
+
+//堆的创建
+void heapInit(heap* hp)
+{
+	if (hp == 0)
+		return;
+	hp->_data = NULL;
+	hp->_size = hp->_capacity = 0;
+}
+
+//容量检查
+void checkCapacity(heap* hp)
+{
+	if (hp->_size == hp->_capacity)
+	{
+		int newCapacity = hp->_capacity == 0 ? 1 : 2 * hp->_capacity;
+		hp->_data = (HDataType*)realloc(hp->_data, sizeof(HDataType) * newCapacity);
+		hp->_capacity = newCapacity;
+	}
+}
+
+//堆的插入
+void heapPush(heap* hp, HDataType val)
+{
+	if (hp == 0)
+		return;
+	checkCapacity(hp);
+	hp->_data[hp->_size] = val;
+	hp->_size++;
+	shiftUp(hp->_data, hp->_size, hp->_size - 1);
+}
+
+//堆的删除
+void heapPop(heap* hp)
+{
+	if (hp->_size > 0)
+	{
+		//交换堆顶元素和最后一个元素
+		int tem = hp->_data[0];
+		hp->_data[0] = hp->_data[hp->_size - 1];
+		hp->_data[hp->_size - 1] = tem;
+
+		//尾删
+		hp->_size--;
+		
+		//从堆顶位置开始向下调整
+		shiftDown(hp->_data, hp->_size, 0);
+
+	}
+}
+
+//获取堆顶元素
+HDataType heapTop(heap* hp)
+{
+	return hp->_data[0];
+}
+
+
+//判断堆是否为空
+int heapEmpty(heap* hp)
+{
+	if (hp == 0 || hp->_size == 0)
+		return 1;
+	else
+		return 0;
+}
+
+
+
+
 //假设小堆
 
 
@@ -52,4 +138,26 @@ void shiftUp(int* arr, int n, int cur)
 		else
 			break;
 	}
+}
+
+
+
+
+
+void test()
+{
+	int arr[] = { 10,9,8,7,6,5,4,3,2,1 };
+	int n = sizeof(arr) / sizeof(arr[0]);
+	heap hp;
+	heapInit(&hp);
+	for (int i = 0; i < n; i++)
+	{
+		heapPush(&hp, arr[i]);
+	}
+}
+
+int main()
+{
+	test();
+	return 0;
 }

@@ -141,6 +141,29 @@ void shiftUp(int* arr, int n, int cur)
 }
 
 
+//堆排序
+void heapSort()
+{
+	int arr[] = {17,4,16,5,3};
+	int n = sizeof(arr) / sizeof(arr[0]);
+	//建堆
+	for (int i = (i - 2) / 2; i <= 0; i--)
+	{
+		shiftDown(arr, n, i);
+	}
+	//堆排序
+	int end = n - 1;
+	while (end > 0)
+	{
+		//删除堆顶元素：交换堆顶元素与最后一个元素的位置，向下调整
+		int tem = arr[end];
+		arr[end] = arr[0];
+		arr[0] = tem;
+		shiftDown(arr, end, 0);
+		end--;
+	}
+}
+
 
 
 

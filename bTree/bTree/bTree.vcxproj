@@ -140,6 +140,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bTree.c" />
+    <ClCompile Include="queue.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bTree.h" />
+    <ClInclude Include="queue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

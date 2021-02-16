@@ -1,21 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "queue.h"
+#include "bTree.h"
 
 
 
-typedef char BDatatype;
- 
-typedef struct BTreeNode
-{
-	BDatatype _data;
-	struct BTreeNode* _leftChild;
-	struct BTreeNode* _rightChild;
-}BTreeNode;
 
 
 // A B D # # E # H # # C F # # G # #
 
-BTreeNode* creatNode(BDatatype arr[], int* idx)
+BTreeNode* _creatNode(BDatatype arr[], int* idx)
 {
 	if (arr[*idx] == '#')
 	{
@@ -29,8 +23,8 @@ BTreeNode* creatNode(BDatatype arr[], int* idx)
 		root->_data = arr[*idx];
 		(*idx)++;
 
-		root->_leftChild = creatNode(arr, idx);
-		root->_rightChild = creatNode(arr, idx);
+		root->_leftChild = _creatNode(arr, idx);
+		root->_rightChild = _creatNode(arr, idx);
 		return root;
 	}
 }
@@ -107,7 +101,7 @@ int BTreeKSize(BTreeNode* root, int k)
 }
 
 
-//查找树种的元素
+//查找树中的元素
 BTreeNode* BTreeFind(BTreeNode* root, BDatatype ch)
 {
 	if (root == NULL)
@@ -133,7 +127,78 @@ void BTreeDestory(BTreeNode** root)
 }
 
 
+//树的层序遍历
+void BTreeLevelOrder(BTreeNode* root)
+{
+	Queue q;
+	queueInit(&q);
+	//根节点存入队列中
+	if (root)
+		queuePush(&q, root);
+	//遍历队列中的每一个节点
+	while (!queueEmpty(&q))
+	{
+		//获取队头元素
+		BTreeNode* front = queueFront(&q);
+		//出队
+		queuePop(&q);
+		printf("%c ", front->_data);
+		//保存队头元素的左右孩子节点
+		if (front->_leftChild)
+			queuePush(&q,front->_leftChild);
+		if (front->_rightChild)
+			queuePush(&q,front->_rightChild);
+	}
+	printf("\n");
 
+}
+
+
+//判断树是否为完全二叉树
+int isCompleteBtree(BTreeNode* root)
+{
+	Queue q;
+	queueInit(&q);
+	if (root)
+	{
+		queuePush(&q, root);
+	}
+	while (!queueEmpty(&q))
+	{
+		//获取队头元素
+		BTreeNode* front = queueFront(&q);
+		//出队
+		queuePop(&q);
+		//左右孩子入队
+		if (front)
+		{
+			queuePush(&q, front->_leftChild);
+			queuePush(&q, front->_rightChild);
+		}
+		else
+			break;
+		while (!queueEmpty(&q))
+		{
+			BTreeNode* front = queueFront(&q);
+			queuePop(&q); 
+			if (front)
+				//如果剩余元素中有非空节点，说明节点不连续，不是完全二叉树
+				return 0;
+		}
+		return 1;
+	}
+}
+
+
+
+void test2()
+{
+	char arr[] = "ABD##E#H##CF##G##";
+	int idx = 0;
+	BTreeNode* root = _creatNode(arr, &idx);
+	BTreeLevelOrder(root);
+	int ret = isCompleteBtree(root);
+}
 
 
 void test()
@@ -156,10 +221,11 @@ void test()
 	printf("ksize = %d \n", BTreeKSize(root, 4));
 	node = BTreeFind(root, 'G');
 	printf("%p --> %c \n", node, *node);
+	
 }
 
 int main()
 {
-	test();
+	test2();
 	return 0;
 }

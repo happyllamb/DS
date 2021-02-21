@@ -193,11 +193,10 @@ int isCompleteBtree(BTreeNode* root)
 
 void test2()
 {
-	char arr[] = "ABD##E#H##CF##G##";
+	char arr[] = "abc##de#g##f###";
 	int idx = 0;
 	BTreeNode* root = _creatNode(arr, &idx);
-	BTreeLevelOrder(root);
-	int ret = isCompleteBtree(root);
+	inOrder(root);
 }
 
 
